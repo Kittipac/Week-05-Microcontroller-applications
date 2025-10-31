@@ -412,9 +412,28 @@ Memory analysis complete!
 
 ### คำถามวิเคราะห์ (ง่าย)
 
-1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน?
-2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน?
-3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร?
+1. **Memory Types**: SRAM และ Flash Memory ใช้เก็บข้อมูลประเภทไหน? ตอบ
+
+๐ SRAM → ข้อมูลที่ “เปลี่ยนแปลงได้” ตอนรัน
+
+๐ Flash → ข้อมูลที่ “คงที่” และโหลดมาจากโปรแกรม (ROM)
+
+
+2. **Address Ranges**: ตัวแปรแต่ละประเภทอยู่ใน address range ไหน? ตอบ
+
+๐ Address ที่ขึ้นต้นด้วย 0x3FFB... → อยู่ใน SRAM (Data RAM)
+
+๐ Address ที่ขึ้นต้นด้วย 0x3F40... → อยู่ใน Flash (Program Memory)
+
+
+3. **Memory Usage**: ESP32 มี memory ทั้งหมดเท่าไร และใช้ไปเท่าไร? ตอบ
+
+๐ ESP32 มี SRAM ~520 KB และ Flash ~4 MB
+
+๐ โดยในการทดลอง ตัวโปรแกรมใช้หน่วยความจำเพียงเล็กน้อย
+
+๐ หน่วยความจำส่วนใหญ่ยังว่างให้ใช้งานได้
+
 
 ---
 
