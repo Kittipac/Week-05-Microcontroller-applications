@@ -622,26 +622,45 @@ void app_main() {
 
 | Test Type | Memory Type | Time (μs) | Ratio vs Sequential |
 |-----------|-------------|-----------|-------------------|
-| Sequential | Internal SRAM | _______ | 1.00x |
-| Random | Internal SRAM | _______ | ____x |
-| Sequential | External Memory | _______ | ____x |
-| Random | External Memory | _______ | ____x |
+| Sequential | Internal SRAM | 11576 | 1.00x |
+| Random | Internal SRAM | 13484 | 1.16x |
+| Sequential | External Memory | 12735 | 1.10x |
+| Random | External Memory | 18272 | 1.43x |
 
 **Table 3.2: Stride Access Performance**
 
 | Stride Size | Time (μs) | Ratio vs Stride 1 |
 |-------------|-----------|------------------|
-| 1 | _______ | 1.00x |
-| 2 | _______ | ____x |
-| 4 | _______ | ____x |
-| 8 | _______ | ____x |
-| 16 | _______ | ____x |
+| 1 | 11777 | 1.00x |
+| 2 | 6510 | 0.55x |
+| 4 | 3161 | 0.27x |
+| 8 | 1475 | 0.13x |
+| 16 | 831 | 0.07x |
 
 ### คำถามวิเคราะห์
 
-1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access?
-2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร?
-3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร?
+1. **Cache Efficiency**: ทำไม sequential access เร็วกว่า random access? ตอบ
+
+๐ Sequential access เร็วกว่า random access เพราะ CPU cache ใช้งาน prefetching และ memory line จะถูกโหลดล่วงหน้า
+
+๐ Random access ไม่ต่อเนื่อง ทำให้ cache miss บ่อย ต้องเข้าถึง RAM โดยตรงช้า
+
+2. **Memory Hierarchy**: ความแตกต่างระหว่าง internal SRAM และ external memory คืออะไร? ตอบ
+
+๐ Internal SRAM (DRAM ภายใน) เร็วกว่า external memory (เช่น PSRAM/Flash)
+
+๐ Internal memory latency ต่ำ, bandwidth สูง, อยู่ใกล้ CPU
+
+๐ External memory ต้องผ่าน bus หรือ SPI interface ทำให้ช้ากว่า
+
+3. **Stride Patterns**: stride size ส่งผลต่อ performance อย่างไร? ตอบ
+
+๐ ขนาด stride ขนาดใหญ่ขึ้น ทำให้จำนวนการเข้าถึงหน่วยความจำต่อครั้งน้อยลง
+
+๐ Performance ดีขึ้น (เวลาในการเข้าถึงลดลง) เพราะ CPU สามารถโหลด block data ใน cache ได้มากขึ้น
+
+๐ สังเกตว่า stride 16 ทำเวลาเพียง 831 μs จาก stride 1 ที่ 11777 μs
+
 
 ---
 
