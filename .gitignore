@@ -1,0 +1,45 @@
+# Build output
+/build/
+/cache-test/build/
+67030281/ESP32-Architecture-Lab/cache-test/build/
+67030281/ESP32-Architecture-Lab/dual-core-test/build/
+67030281/ESP32-Architecture-Lab/memory-test/build/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Compiled object files
+*.o
+*.obj
+*.elf
+*.bin
+*.map
+*.axf
+*.hex
+
+# Backup and temporary files
+*.bak
+*.tmp
+*.swp
+*.log
+
+# Python cache (ถ้าใช้ Python scripts)
+__pycache__/
+*.pyc
+
+# ESP-IDF specific
+sdkconfig.old
+sdkconfig.defaults
+cmake-build-*/
+
+# OS generated
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+*.pyc
+__pycache__/
