@@ -887,25 +887,41 @@ void app_main() {
 
 | Metric | Core 0 (PRO_CPU) | Core 1 (APP_CPU) |
 |--------|-------------------|-------------------|
-| Total Iterations | _______ | _______ |
-| Average Time per Iteration (μs) | _______ | _______ |
-| Total Execution Time (ms) | _______ | _______ |
-| Task Completion Rate | _______ | _______ |
+| Total Iterations | 100 | 150 |
+| Average Time per Iteration (μs) | 139 | 10151 |
+| Total Execution Time (ms) | 5002 | 6098 |
+| Task Completion Rate | 100% | 100% |
 
 **Table 4.2: Inter-Core Communication**
 
 | Metric | Value |
 |--------|-------|
-| Messages Sent | _______ |
-| Messages Received | _______ |
-| Average Latency (μs) | _______ |
-| Queue Overflow Count | _______ |
+| Messages Sent | 10 |
+| Messages Received | 10 |
+| Average Latency (μs) | ~15,000 μs |
+| Queue Overflow Count | 0 |
 
 ### คำถามวิเคราะห์
 
-1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด?
-2. **Communication Overhead**: inter-core communication มี overhead เท่าไร?
+1. **Core Specialization**: จากผลการทดลอง core ไหนเหมาะกับงานประเภทใด? 
+ตอบ 
+๐ Core 0 (PRO_CPU) เหมาะกับงานที่เบา แต่ต้องทำซ้ำบ่อย ๆ / งาน protocol หรือ task ที่ latency-sensitive
+
+๐ Core 1 (APP_CPU) เหมาะกับงานที่หนักต่อ iteration เช่น งานคำนวณหรือประมวลผลเชิงตัวเลข
+
+2. **Communication Overhead**: inter-core communication มี overhead เท่าไร? 
+ตอบ
+
+๐ Latency เฉลี่ยระหว่าง core อยู่ประมาณ 15 ms
+
+๐ Overhead มาจากคิวยังไม่ว่างและ Core 1 ทำงานช้าต่อ iteration
+
 3. **Load Balancing**: การกระจายงานระหว่าง cores มีประสิทธิภาพหรือไม่?
+ตอบ
+
+๐ การกระจายงานยังค่อนข้างดีสำหรับ Core 0 vs Core 1 เพราะแต่ละ core ทำงาน task ของตัวเอง
+
+๐ แต่หาก Core 1 งานหนักกว่ามาก จะเกิด latency สูงเมื่อรับข้อความจาก Core 0
 
 ---
 
@@ -919,9 +935,9 @@ void app_main() {
 ### แบบฟอร์มส่งงาน
 
 **ข้อมูลนักศึกษา:**
-- ชื่อ: _________________________________
-- รหัสนักศึกษา: _______________________
-- วันที่ทำการทดลอง: ___________________
+- ชื่อ: นายกิตติภัค เกตุแก้ว
+- รหัสนักศึกษา: 67030025
+- วันที่ทำการทดลอง: 30 ตุลาคม 2568
 
 **Checklist การทดลอง:**
 - [ ] Environment setup สำเร็จ (ต่อเนื่องจากสัปดาห์ที่ 4)
